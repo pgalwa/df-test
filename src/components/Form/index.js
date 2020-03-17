@@ -29,9 +29,19 @@ const Form = ({setResults}) => {
     setActiveSection(idx)
   }
 
+  const showForm = () => {
+    if(isLoading) {
+      return <div> Loading... </div>
+    } else if(error) {
+      return <div>{error}</div>
+    } else if(!isLoading && formSchema) {
+      return createForm(formSchema, activeSection, onSetInputValue, formValues);
+    }
+  }
+
   return (
     <form onSubmit={onSubmit}>
-      {formSchema && createForm(formSchema, activeSection, onSetInputValue, formValues)}
+      {showForm() }
       <button type="submit">Submit</button>
       <div>
         {formSchema && formSchema.sections.map(

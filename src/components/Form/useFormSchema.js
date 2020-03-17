@@ -10,12 +10,12 @@ const useFormSchema = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    setIsLoading(true);
     (async () => {
-      console.log('hook')
+      setIsLoading(true);
       try {
         const formSchema = await apiForm.getSchema();
         setFormSchema(formSchema);
+        setIsLoading(false);
       } catch(e) {
         setError(e);
         setIsLoading(false);
