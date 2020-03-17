@@ -1,37 +1,44 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import useFormSchema from './useFormSchema'
+import createForm from './createForm';
 
 const Form = () => {
+  const [formValues, setFormValues] = useState({});
 
-  const { } = useFormSchema()
+  const {formSchema, isLoading, error} = useFormSchema();
 
+  const [activeSection, setActiveSection] = useState(0);
+  
   const onSubmit = (e) => {
     /*
       TODO: Implement
      */
+    e.preventDefault();
   }
 
+  const onSetInputValue = (e) => {
+    e.preventDefault();
+    setFormValues({
+      ...formValues,
+      [e.target.name]: e.target.value
+    })
+  }
+  const onSetActiveSection = (e, idx) =>{
+    e.preventDefault()
+    setActiveSection(idx)
+  }
 
   return (
     <form onSubmit={onSubmit}>
-      <fieldset name="sampleSection1">
-        <label htmlFor="sampleId1">Sample Input 1</label>
-        <input name="sampleName1" type="text" id="sampleId1"/>
-        <label htmlFor="sampleId2">Sample Input 2</label>
-        <input name="sampleName2" type="text" id="sampleId2"/>
-      </fieldset>
-      <fieldset name="sampleSection@">
-        <label htmlFor="sampleId3">Sample Input 3</label>
-        <input name="sampleName3" type="text" id="sampleId3"/>
-        <label htmlFor="sampleId4">Sample Input 4</label>
-        <input name="sampleName4" type="text" id="sampleId4"/>
-      </fieldset>
+      {formSchema && createForm(formSchema, activeSection, onSetInputValue, formValues)}
       <button type="submit">Submit</button>
       <div>
-        <button>1</button>
-        <button>2</button>
+        {formSchema && formSchema.sections.map(
+          (section, idx) => <button key={`section--${idx}`} onClick={e => onSetActiveSection(e, idx)}>{idx + 1}</button> // just to ensure that key will be unique
+        )}
       </div>
+      
     </form>
   )
 };
