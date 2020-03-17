@@ -4,7 +4,7 @@ const Results = ({results}) => {
   return (
       <pre>
         {
-          JSON.stringify(results, null, 4)
+          results && JSON.stringify(results, null, 4)
         }
       </pre>
   )

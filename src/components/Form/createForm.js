@@ -2,10 +2,16 @@
 import React from 'react'
 
 function createField(field, onChange, values) {
-    return (<>
+    return (<span key={field.name}>
         <label htmlFor={field.id}>{field.label}</label>
-        <input name={field.name} type="text" id={field.id} onChange={onChange} value={values[field.name] || ''}/>
-    </>)
+        <input
+            id={field.id}
+            type="text"
+            name={field.name}
+            onChange={onChange}
+            value={values[field.name] || field.default}
+        />
+    </span>)
 }
 
 export default function createForm(schema, activeSection, onChange, values, setActiveSection) {
