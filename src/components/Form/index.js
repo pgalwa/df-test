@@ -2,8 +2,9 @@ import React, { useState } from 'react'
 
 import useFormSchema from './useFormSchema'
 import createForm from './createForm';
+import mapSchemaToResult from './mapSchemaToResult';
 
-const Form = () => {
+const Form = ({setResults}) => {
   const [formValues, setFormValues] = useState({});
 
   const {formSchema, isLoading, error} = useFormSchema();
@@ -11,10 +12,9 @@ const Form = () => {
   const [activeSection, setActiveSection] = useState(0);
   
   const onSubmit = (e) => {
-    /*
-      TODO: Implement
-     */
     e.preventDefault();
+    const result = mapSchemaToResult(formSchema, formValues)
+    setResults(result);
   }
 
   const onSetInputValue = (e) => {
